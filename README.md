@@ -2,6 +2,8 @@
 
 A demonstration app showcasing the core features of Guide.com. This application highlights integration with cutting-edge technologies to deliver a seamless user experience.
 
+[Video Explanation of the App (Click here)](https://www.loom.com/share/5f5babd19a8b4572b1dfe6d5436e58ec?sid=08b8cca3-68fe-4c83-8f44-79144d525aef)
+
 ## 🚀 Features  
 
 - Interactive UI/UX built with **React Native Expo**  
