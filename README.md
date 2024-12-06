@@ -1,6 +1,17 @@
-# Welcome to your Expo app 👋
+# Guide.com Demo Application  
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+A demonstration app showcasing the core features of Guide.com. This application highlights integration with cutting-edge technologies to deliver a seamless user experience.
+
+[Video Explanation of the App (Click here)](https://www.loom.com/share/5f5babd19a8b4572b1dfe6d5436e58ec?sid=08b8cca3-68fe-4c83-8f44-79144d525aef)
+
+## 🚀 Features  
+
+- Interactive UI/UX built with **React Native Expo**  
+- Authentication powered by **AWS Cognito**  
+- Secure storage of media assets in **AWS S3 Bucket**  
+- Serverless functions managed with **AWS Lambda**  
+- API integration through **AWS API Gateway**  
+- Scalable and relational database backend using **PostgreSQL** and **SQL**  
 
 ## Get started
 
@@ -16,35 +27,26 @@ This is an [Expo](https://expo.dev) project created with [`create-expo-app`](htt
     npx expo start
    ```
 
-In the output, you'll find options to open the app in a
+Screenshots:  
+![Login Screen](https://github.com/user-attachments/assets/b7869c56-4575-4681-8aa4-39399fb9a462)
+![Home Screen](https://github.com/user-attachments/assets/871987cd-c3e1-47a3-8966-7e4273032779)
+![My Trips Screen](https://github.com/user-attachments/assets/71f67441-a060-42c9-9e73-4fb05cb47c51)
+![Detail Screen](https://github.com/user-attachments/assets/633adb95-0963-40f8-85ea-50ec60e77c1b)
+![Detail Screen 2](https://github.com/user-attachments/assets/7b023766-2915-46da-a026-8c7c464d09ff)
+![Place Screen](https://github.com/user-attachments/assets/611bdfd2-7568-4296-8e85-7e1d2bd41628)
+![Settings Screen](https://github.com/user-attachments/assets/20251859-ae5f-4663-b825-0d51e13cb918)
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
 
-## Get a fresh project
+## 🛠 Technologies Used  
 
-When you're ready, run:
+| **Technology**       | **Purpose**                       |  
+|-----------------------|-----------------------------------|  
+| React Native (Expo)   | Frontend development             |  
+| AWS Cognito           | User authentication              |  
+| AWS S3 Bucket         | Media storage                    |  
+| AWS Lambda            | Serverless backend logic         |  
+| AWS API Gateway       | API management                   |  
+| PostgreSQL & SQL      | Database storage and management  |  
 
-```bash
-npm run reset-project
-```
-
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+---
