@@ -1,70 +1,181 @@
-import { Image, StyleSheet, Platform } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Text, View, StyleSheet, Pressable } from "react-native";
+import DropDownPicker from 'react-native-dropdown-picker';
+import {municipios} from '../../assets/data/municipios';
+import { Video } from 'expo-av';
+import React, { useEffect, useState } from 'react';
+import { router } from 'expo-router';
 
-import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
 
-export default function HomeScreen() {
+export default function Index() {
+    const data = municipios.map((value) => {
+        return {
+          label: value.city,
+          value: value.city        
+        };
+      });
+
+    const [openTown, setOpenTown] = useState(false);
+    const [valueTown, setValueTown] = useState();
+    const [itemTown, setItemTown] = useState([...data]);
+
+    // This is to delete result
+    // useEffect(async() => {
+    //   try {
+    //     await AsyncStorage.removeItem('myTripData');
+    //     console.log('myTripData has been removed');
+    //   } catch (error) {
+    //     console.error('Error removing myTripData:', error);
+    //   }
+    // }, [])
+
+    const saveData = async(valueTown) => {
+      const storedData = await AsyncStorage.getItem('myTripData');
+      
+      const tripArray = storedData ? JSON.parse(storedData) : [];
+      
+      if (!Array.isArray(tripArray)) {
+        throw new Error('Stored data is not an array');
+      }
+
+      const newTrip = { city: valueTown };
+
+      const updatedTripArray = tripArray.some((trip) => trip.city === valueTown)
+        ? tripArray
+        : [...tripArray, newTrip];
+
+      await AsyncStorage.setItem('myTripData', JSON.stringify(updatedTripArray));
+
+      router.push({
+        pathname: '/mytrip'
+      })
+    }
+
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({ ios: 'cmd + d', android: 'cmd + m' })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          Tap the Explore tab to learn more about what's included in this starter app.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          When you're ready, run{' '}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+    <View
+      style={styles.container}
+    >
+
+        <Text style={styles.title}>Let Your Journey Begin</Text>
+        <Video
+        source={require('../../assets/videos/background.mp4')}
+        rate={1.0}
+        volume={1.0}
+        isMuted={false}
+        resizeMode="cover" 
+        shouldPlay
+        isLooping
+        style={styles.backgroundVideo}
+      />
+            <View style={styles.overlay} />
+
+        <View
+        style={{
+            backgroundColor: 'white',
+            display: 'flex',
+            padding: 30,
+            gap: 15,
+            width: '90%',
+            height: 250,
+            borderRadius: 15
+
+        }}
+        >  
+        <Text style={{
+            fontWeight: 700,
+        }}>Where do you want to go?</Text>
+        <DropDownPicker
+                open={openTown}
+                value={valueTown}
+                items={itemTown}
+                setOpen={setOpenTown}
+                setValue={setValueTown}
+                setItems={setItemTown}
+                onSelectItem={(item) => {
+                  setValueTown(item);
+                }}
+                placeholder={`Select a town`}
+                searchable={true}
+                autoScroll={true}
+                listMode="FLATLIST"
+                min={0}
+                max={1}
+                modalAnimationType="slide"
+                listParentLabelStyle={{
+                  fontWeight: 'bold',
+                }}
+                listChildLabelStyle={{
+                  color: 'grey',
+                }}
+                placeholderStyle={{
+                  color: 'grey',
+                  fontWeight: 'bold',
+                }}
+                style={{ borderWidth: 1, borderColor: 'grey' }}
+              />
+        
+        <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
+
+        <Pressable 
+        disabled={!valueTown} 
+        style={[styles.button, {backgroundColor: valueTown ? '#3B0BEC': 'gray'}]}
+        onPress={async () => 
+         { 
+          try {
+            await saveData(valueTown)
+            
+          } catch (error) {
+            console.error('Error saving trip data:', error);
+
+          }
+      
+      }}>
+          <Text style={{ color: 'white' }}>Next</Text>
+        </Pressable>
+</View>
+
+            
+        </View>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-  },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
-  },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
-  },
-});
+    container: {
+        flex: 1,
+        alignItems: 'center',
+        paddingTop: 20
+      },
+    button: {
+        alignItems: 'center',
+        paddingVertical: 12,
+        borderRadius: 4,
+        width: 70,
+        elevation: 3
+    },
+    backgroundVideo: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        width: '100%',
+        height: 1000,
+      },
+      overlay: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+      },
+      title: {
+        color: 'white',
+        fontFamily: 'ui-sans-serif',
+        fontWeight: 700,
+        fontSize: 35,
+        padding: 20,
+        zIndex: 100
+      }
+  })
